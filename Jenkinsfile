@@ -16,26 +16,12 @@ AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
 //Stages.
 stages {   
 
-stage('Slack Notification(Start)') {
-steps {
-slackSend message: 'Pipeline Inciada!. Necessidade de atenção, caso seja em Produção!'
-
-}
-}
-
-  
 stage('GIT CLONE') {
 steps {
                 // Get code from a GitHub repository
 git url: 'https://github.com/BrunoSantos88/-K8-challenge-carrefour.git', branch: 'main',
 credentialsId: 'aws-developer'
           }
-}
-
-stage('Slack Notification(Terraform Start Process)') {
-steps {
-slackSend message: 'Agora está iniciando processo de construção da infra-estrutura da AWS. O commando "terraform fmt" , vai atualizar somente oque foi alterado ou adicionado ao projeto!'
-}
 }
 
 stage('Sonar(SNYK)SAST') {
@@ -86,27 +72,9 @@ stage('DOCKER BUILD BACKEND') {
 }
 
 
-//Email Notification
-post {
-always {
-echo "Notifying build result by email"
 }
-success {
-mail to: 'infratidevops@gmail.com',
-subject: "SUCCESS: ${currentBuild.fullDisplayName}",
-body: "Pipeline passou, Efetou com Sucesso"
-}
-failure {
-mail to: 'infratidevops@gmail.com',
-subject:"FAILURE: ${currentBuild.fullDisplayName}",
-body: "Pipeline Falhou , verificar os parametros corretos!"
-}
-       
 }
 }
 
-
-}
-}
 
 
