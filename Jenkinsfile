@@ -46,12 +46,15 @@ stage('DockerLogin') {
   }
   }
    
-stage('DockerPush') {
+stage('DockerPushFrontend') {
   steps {
     sh 'docker push brunosantos88/awsfrontend:v2'
-    sh 'docker push brunosantos88/awsbackend:v2'
   }
   }
+
+stage('DockerPushbackend') {
+  steps {
+   sh 'docker push brunosantos88/awsbackend:v2'
 
 
 }
