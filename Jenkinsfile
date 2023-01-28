@@ -28,7 +28,7 @@ stage('GIT CLONE') {
 steps {
                 // Get code from a GitHub repository
 git url: 'https://github.com/BrunoSantos88/-K8-challenge-carrefour.git', branch: 'main',
-credentialsId: 'jenkins-server_local'
+credentialsId: 'aws-developer'
           }
 }
 
@@ -38,24 +38,51 @@ slackSend message: 'Agora está iniciando processo de construção da infra-estr
 }
 }
 
-stage('TF INICIAR') {
-steps {
-sh 'terraform init -reconfigure'
-                
+stage('Sonar(SNYK)SAST') {
+            steps {		
+				withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+					sh 'mvn snyk:test -fn'
+				}
+			}
+    }
+
+	stage('DOCKER BUILD FRONTEND') { 
+            steps { 
+               withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
+                 script{
+                 app =  docker.build("frontend frontend/")
+                 }
+               }
+            }
+    }
+
+	stage('Push') {
+            steps {
+                script{
+                    docker.withRegistry('https://555527584255.dkr.ecr.us-east-1.amazonaws.com', 'ecr.us-east-1:aws-credentials') {
+                    app.push("v1")
+                    }
+                }
 }
 }
 
-stage('TF FMT') {
-steps {
-sh 'terraform fmt'
-}
-}
+stage('DOCKER BUILD BACKEND') { 
+            steps { 
+               withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
+                 script{
+                 app =  docker.build("backend backend/.")
+                 }
+               }
+            }
+    }
 
-stage('TF APPLY') {
- steps {
- sh 'terraform apply -auto-approve'
-}
-}
+	stage('Push') {
+            steps {
+                script{
+                    docker.withRegistry('https://555527584255.dkr.ecr.us-east-1.amazonaws.com', 'ecr.us-east-1:aws-credentials') {
+                    app.push("v1")
+                    }
+                }
 }
 
 
@@ -75,6 +102,10 @@ subject:"FAILURE: ${currentBuild.fullDisplayName}",
 body: "Pipeline Falhou , verificar os parametros corretos!"
 }
        
+}
+}
+
+
 }
 }
 
