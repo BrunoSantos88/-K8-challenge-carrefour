@@ -4,4 +4,4 @@ metadata:
   name: mysql-connection
 spec:
   type: ExternalName
-  externalName: endpointrds
+  externalName: developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com

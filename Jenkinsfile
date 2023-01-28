@@ -60,6 +60,44 @@ stage('DockerPushbackend') {
 }
 }
 
+stage ('SQL Test') {
+node('remote_node') {
+def sql = Sql.newInstance("jdbc:mysql://DBHOST/DBSCHEMA",
+"DBUSER", "DBPASSWORD", "com.mysql.jdbc.Driver")
+query = "SELECT * from myTable"
+println sql.rows(query)
+sql.close()
+}
+}
+
+stage('Kubernetes Deployment(Services)') {
+	steps {
+	  withKubeConfig([credentialsId: 'kubelogin']) {
+    sh ('kubectl create namespace developer')
+		sh ('kubectl apply -f frontend.yaml --namespace=developer')
+    sh ('kubectl apply -f backend.yaml --namespace=developer')
+     sh ('kubectl apply -f database.yaml --namespace=developer')
+	}
+	}
+  }
+
+//Teste DAST para os serviçoes kuberntes
+stage ('AGUARDAR OWSZAP(DAST)'){
+	steps {
+    sh 'pwd; sleep 180; echo "Application Has been deployed on K8S"'
+	}
+	}
+	   
+
+ stage('OWSZAPSONAR(DAST)') {
+  steps {
+	  withKubeConfig([credentialsId: 'kubelogin']) {
+	  sh('zap.sh -cmd -quickurl http://$(kubectl get services/frontend --namespace=developer -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
+	  archiveArtifacts artifacts: 'zap_report.html'
+	}
+	}
+  } 
+
 
 }
 }
