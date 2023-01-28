@@ -82,7 +82,7 @@ stage ('AGUARDAR OWSZAP(DAST)'){
   steps {
 	  withKubeConfig([credentialsId: 'kubelogin']) {
 	  sh('zap.sh -cmd -quickurl http://$(kubectl get services/frontend --namespace=developer -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
-    h('zap.sh -cmd -quickurl http://$(kubectl get services/backend --namespace=developer -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
+    sh('zap.sh -cmd -quickurl http://$(kubectl get services/backend --namespace=developer -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
 	  archiveArtifacts artifacts: 'zap_report.html'
 	}
 	}
