@@ -62,13 +62,7 @@ stage('DockerPushbackend') {
 
 stage('MYSQL CREATE QUERY') {
       steps {
-        sh(script:'''
-          mysql -N -u kubenews -pPg#kubenews -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -P 3306  -e 
-          "CREATE TABLE mensagens (
-          id int,
-          nome varchar(50),
-          mensagem varchar(100)"
-        ''')
+        sh ('mysql -N -u kubenews -pPg#kubenews -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -P 3306  < file.sql')
       }
     }
 
