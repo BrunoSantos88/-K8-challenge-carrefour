@@ -27,7 +27,7 @@ resource "aws_security_group" "networking" {
     ingress {
     from_port   = "22"
     to_port     = "22"
-    protocol    = "ssh"
+    protocol    = "tcp"
    cidr_blocks = ["0.0.0.0/0"]
 
     }
@@ -96,5 +96,9 @@ resource "aws_security_group" "networking" {
      cidr_blocks = ["0.0.0.0/0"]
   }
 
-}
 
+ tags = {
+    Name = "JenkinsSG"
+  }
+
+}
