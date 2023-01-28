@@ -38,7 +38,6 @@ slackSend message: 'Agora está iniciando processo de construção da infra-estr
 }
 }
 
-'''''
 stage('TF INICIAR') {
 steps {
 sh 'terraform init -reconfigure'
@@ -58,7 +57,7 @@ stage('TF APPLY') {
 }
 }
 }
-'''''
+
 
 //Email Notification
 post {
@@ -75,9 +74,8 @@ mail to: 'infratidevops@gmail.com',
 subject:"FAILURE: ${currentBuild.fullDisplayName}",
 body: "Pipeline Falhou , verificar os parametros corretos!"
 }
-
+       
 }
 }
 
-}
 
