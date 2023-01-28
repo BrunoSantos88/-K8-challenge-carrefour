@@ -10,7 +10,7 @@ environment {
 //Chaves
 AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-//DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
+DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
 }
 
 //Stages.
