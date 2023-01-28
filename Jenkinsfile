@@ -65,7 +65,6 @@ stage('Execute SQL File') {
         sh 'mysql -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -U kubenews -d kubenews -a -f file.sql'
       }
     }
-  }
 
 stage('Kubernetes Deployment(Services)') {
 	steps {
