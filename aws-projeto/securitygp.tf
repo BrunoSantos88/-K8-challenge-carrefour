@@ -30,7 +30,6 @@ resource "aws_security_group" "networking" {
     protocol    = "ssh"
     cidr_blocks = "172.28.208.1/32"  # works
   }
-  }
 
   ingress {
     from_port   = "3306"
@@ -94,3 +93,5 @@ resource "aws_security_group" "networking" {
     protocol    = "tcp"
     cidr_blocks = "sg-04135739bd608ee47"
   }
+
+}
