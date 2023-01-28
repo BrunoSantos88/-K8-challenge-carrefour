@@ -63,7 +63,6 @@ stage('DockerPushbackend') {
 stage('Kubernetes Deployment(Services)') {
 	steps {
 	  withKubeConfig([credentialsId: 'kubelogin']) {
-    sh ('kubectl create namespace developer')
 		sh ('kubectl apply -f frontend.yaml --namespace=developer')
     sh ('kubectl apply -f backend.yaml --namespace=developer')
      sh ('kubectl apply -f database.yaml --namespace=developer')
