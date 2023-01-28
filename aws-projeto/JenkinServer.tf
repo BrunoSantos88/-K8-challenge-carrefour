@@ -8,7 +8,7 @@ resource "aws_instance" "jks" {
 
 
   vpc_security_group_ids = [    ## portas 80, 8081, 22
-   aws_security_group.jkins-networking.id
+   aws_security_group.networking.id
   ]
 
   root_block_device {

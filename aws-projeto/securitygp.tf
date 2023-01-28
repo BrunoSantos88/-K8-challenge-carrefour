@@ -1,4 +1,4 @@
-resource "aws_security_group" "sg-networking" {
+resource "aws_security_group" "networking" {
   name = "networking-sg"
   vpc_id = aws_vpc.networking.id
   
@@ -14,6 +14,20 @@ resource "aws_security_group" "sg-networking" {
     from_port   = "8125"
     to_port     = "8125"
     protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = "8081"
+    to_port     = "8081"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+    ingress {
+    from_port   = "22"
+    to_port     = "22"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -89,32 +103,3 @@ resource "aws_security_group" "sg-networking" {
   }
 }
 
-resource "aws_security_group" "jkins-networking" {
-  name = "jenkins-sg"
-  vpc_id = aws_vpc.networking.id
-
-    ingress {
-    from_port   = "8081"
-    to_port     = "8081"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-    ingress {
-    from_port   = "22"
-    to_port     = "22"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
- 
-
-}
