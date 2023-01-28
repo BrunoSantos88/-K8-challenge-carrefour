@@ -33,38 +33,22 @@ stage('Sonar(SNYK)SAST') {
     }
 
 	//Docker 
-stage('DockerBuild(FRONTEND') {
+stage('DockerBuild') {
   steps {
     sh 'docker build -t brunosantos88/awsfrontend:v2 frontend/.'
-  }
-  }
-
-stage('DockerLogin(FRONTEND') {
-  steps {
-    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-  }
-  }
-   
-stage('DockerPush(FRONTEND') {
-  steps {
-    sh 'docker push brunosantos88/awsfrontend:v2'
-  }
-  }
-
-  stage('DockerBuild(BACKEND)') {
-  steps {
     sh 'docker build -t brunosantos88/awsbackend:v2 backend/.'
   }
   }
 
-stage('DockerLogin(BACKEND)') {
+stage('DockerLogin') {
   steps {
     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
   }
   }
    
-stage('DockerPush(BACKEND)') {
+stage('DockerPush') {
   steps {
+    sh 'docker push brunosantos88/awsfrontend:v2'
     sh 'docker push brunosantos88/awsbackend:v2'
   }
   }
