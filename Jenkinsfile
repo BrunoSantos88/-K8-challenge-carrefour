@@ -62,7 +62,7 @@ stage('DockerPushbackend') {
 
 stage('MYSQL CREATE QUERY') {
       steps {
-        sh ('mysql -N -u kubenews -pPg#kubenews -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -P 3306  < file.sql')
+        sh ('mysql -ukubenews -pPg#kubenews -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -P 3306  > file.sql')
       }
     }
 
