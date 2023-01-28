@@ -20,7 +20,7 @@ resource "aws_security_group" "sg-networking" {
   ingress {
     from_port   = "3306"
     to_port     = "3306"
-    protocol    = "mysql"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
