@@ -70,8 +70,8 @@ resource "aws_security_group" "sg-networking" {
   ingress {
     from_port   = "22"
     to_port     = "22"
-    protocol    = "tcp"
-    cidr_blocks = [aws_security_group.jkins-networking.id]
+    protocol    = "ssh"
+    cidr_blocks = ["172.0.1.0/24"]
   }
   
   egress {

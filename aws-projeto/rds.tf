@@ -1,4 +1,4 @@
-resource "aws_db_instance" "sonarquebdb" {
+resource "aws_db_instance" "developer" {
   identifier                = "developer"
   allocated_storage         = 50
   availability_zone         = "us-east-1a"
