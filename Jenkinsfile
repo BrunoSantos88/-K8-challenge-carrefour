@@ -60,16 +60,6 @@ stage('DockerPushbackend') {
 }
 }
 
-stage ('SQL Test') {
-node('remote_node') {
-def sql = Sql.newInstance("jdbc:mysql://DBHOST/DBSCHEMA",
-"DBUSER", "DBPASSWORD", "com.mysql.jdbc.Driver")
-query = "SELECT * from myTable"
-println sql.rows(query)
-sql.close()
-}
-}
-
 stage('Kubernetes Deployment(Services)') {
 	steps {
 	  withKubeConfig([credentialsId: 'kubelogin']) {
