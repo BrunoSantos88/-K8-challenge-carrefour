@@ -33,27 +33,6 @@ variable "jenkinsServer" {
 }
 
 
-#networking
-variable "subenet_B_networking" {
-  type    = string
-  default = "subnet-0f76ebdd71a1d6b17"
-}
-
-variable "subenet_A_networking" {
-  type    = string
-  default = "subnet-04ef500f601f04698"
-}
-
-variable "subenet_C_networking" {
-  type    = string
-  default = "subnet-0e2f2437e64ea6a3f"
-}
-
-variable "security" {
-  type    = string
-  default = "sg-069f0e8a02686cfd7"
-}
-
 variable "admin" {
   type    = string
   default = "kubenews"
@@ -64,4 +43,8 @@ variable "senha" {
   default = "Pg#kubenews"
 }
 
+variable "rds_instance_type" {
+  type    = string
+  default = "db.t3.micro"
+}
 

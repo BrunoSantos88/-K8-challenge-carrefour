@@ -18,9 +18,9 @@ resource "aws_security_group" "sg-networking" {
   }
 
   ingress {
-    from_port   = "5432"
-    to_port     = "5432"
-    protocol    = "postgres"
+    from_port   = "3306"
+    to_port     = "3306"
+    protocol    = "mysql"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -80,6 +80,13 @@ resource "aws_security_group" "sg-networking" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  egress {
+    from_port   = "3306"
+    to_port     = "3306"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_security_group" "jkins-networking" {
@@ -90,21 +97,21 @@ resource "aws_security_group" "jkins-networking" {
     from_port   = "8081"
     to_port     = "8081"
     protocol    = "tcp"
-    cidr_blocks = ["${local.ifconfig_co_json.ip}/32"]
+    cidr_blocks = ["187.74.168.177/32"]
   }
 
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["${local.ifconfig_co_json.ip}/32"]
+    cidr_blocks = ["187.74.168.177/32"]
   }
 
   ingress {
     from_port   = "22"
     to_port     = "22"
     protocol    = "tcp"
-    cidr_blocks = ["${local.ifconfig_co_json.ip}/32"]
+    cidr_blocks = ["187.74.168.177/32"]
   }
 
 }

@@ -1,9 +1,9 @@
 <?php
 
 $servername = "mysql-connection";
-$username = "root";
-$password = "Senha123";
-$database = "meubanco";
+$username = "kubenews";
+$password = "Pg#kubenews";
+$database = "kubenews";
 
 // Criar conexão
 
