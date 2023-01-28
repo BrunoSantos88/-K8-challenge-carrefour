@@ -71,7 +71,7 @@ resource "aws_security_group" "sg-networking" {
     from_port   = "22"
     to_port     = "22"
     protocol    = "ssh"
-    cidr_blocks = ["172.0.1.0/24"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   
   egress {
