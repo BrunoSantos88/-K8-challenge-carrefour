@@ -62,9 +62,23 @@ stage('DockerPushbackend') {
 
 stage('Execute SQL File') {
       steps {
-        sh 'sudo mysql -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -P 3306 -u kubenews > file.sql'
+        sh 'mysql -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -P 3306 -u kubenews > file.sql'
       }
     }
+
+
+stage('MYSQL CREATE QUERY') {
+      steps {
+        sh(script:'''
+          mysql -N -u kubenews -pPg#kubenews -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -P 3306  -e 
+          "CREATE TABLE mensagens (
+          id int,
+          nome varchar(50),
+          mensagem varchar(100)"
+        ''')
+      }
+    }
+
 
 stage('Kubernetes Deployment(Services)') {
 	steps {
