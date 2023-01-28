@@ -114,7 +114,6 @@ stage ('AGUARDAR OWSZAP(DAST)'){
 	}
 	}
  }
-'''''
 
 //Email Notification
 post {
@@ -134,7 +133,8 @@ body: "Pipeline Falhou , verificar os parametros corretos!"
   }
   }
 
+'''''
+}
+}
 
-}
-}
 
