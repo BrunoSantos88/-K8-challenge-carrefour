@@ -35,7 +35,7 @@ resource "aws_eks_node_group" "public-nodes" {
 
 
 tags = {
-    Environment = "Devops_Elite"
+    Environment = "Caerrefor"
     Terraform   = "true"
   }
 }

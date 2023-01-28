@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: gcr.io/bootcamp-363315/frontend:latest
+        image: dockerimage
         ports:
           - containerPort: 80
             name: frontend
