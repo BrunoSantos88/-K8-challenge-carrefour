@@ -42,7 +42,7 @@ stage('Sonar(SNYK)SAST') {
             }
     }
 
-	stage('Push') {
+	stage('SOCKER PUSH FRONTEND') {
             steps {
                 script{
                     docker.withRegistry('https://555527584255.dkr.ecr.us-east-1.amazonaws.com', 'ecr.us-east-1:aws-credentials') {
@@ -62,7 +62,7 @@ stage('DOCKER BUILD BACKEND') {
             }
     }
 
-	stage('Push') {
+	stage('Docker PUSH BACKEND') {
             steps {
                 script{
                     docker.withRegistry('https://555527584255.dkr.ecr.us-east-1.amazonaws.com', 'ecr.us-east-1:aws-credentials') {
