@@ -32,49 +32,45 @@ stage('Sonar(SNYK)SAST') {
 			}
     }
 
-	stage('DOCKER BUILD FRONTEND') { 
-            steps { 
-               withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
-                 script{
-                 app =  docker.build("frontend frontend/")
-                 }
-               }
-            }
-    }
+	//Docker 
+stage('DockerBuild(FRONTEND') {
+  steps {
+    sh 'docker build -t brunosantos88/awsfrontend:v2 frontend/.'
+  }
+  }
 
-	stage('SOCKER PUSH FRONTEND') {
-            steps {
-                script{
-                    docker.withRegistry('https://555527584255.dkr.ecr.us-east-1.amazonaws.com', 'ecr.us-east-1:aws-credentials') {
-                    app.push("v1")
-                    }
-                }
-}
-}
+stage('DockerLogin(FRONTEND') {
+  steps {
+    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+  }
+  }
+   
+stage('DockerPush(FRONTEND') {
+  steps {
+    sh 'docker push brunosantos88/awsfrontend:v2'
+  }
+  }
 
-stage('DOCKER BUILD BACKEND') { 
-            steps { 
-               withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
-                 script{
-                 app =  docker.build("backend backend/.")
-                 }
-               }
-            }
-    }
+  stage('DockerBuild(BACKEND)') {
+  steps {
+    sh 'docker build -t brunosantos88/awsbackend:v2 backend/.'
+  }
+  }
 
-	stage('Docker PUSH BACKEND') {
-            steps {
-                script{
-                    docker.withRegistry('https://555527584255.dkr.ecr.us-east-1.amazonaws.com', 'ecr.us-east-1:aws-credentials') {
-                    app.push("v1")
-                    }
-                }
-}
+stage('DockerLogin(BACKEND)') {
+  steps {
+    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+  }
+  }
+   
+stage('DockerPush(BACKEND)') {
+  steps {
+    sh 'docker push brunosantos88/awsbackend:v2'
+  }
+  }
 
 
 }
 }
-}
-
 
 
