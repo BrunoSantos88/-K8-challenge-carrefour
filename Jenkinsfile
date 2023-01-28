@@ -62,7 +62,7 @@ stage('DockerPushbackend') {
 
 stage('Execute SQL File') {
       steps {
-        sh 'mysql -u kubenews -p -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com < file.sql'
+        sh 'mysql -h developer.cghgqbvfm4sf.us-east-1.rds.amazonaws.com -U kubenews -d kubenews -a -f file.sql'
       }
     }
 
