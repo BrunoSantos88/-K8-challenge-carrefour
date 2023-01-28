@@ -21,21 +21,22 @@ resource "aws_security_group" "networking" {
     from_port   = "8081"
     to_port     = "8081"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = "172.28.208.1/32"  # works
   }
 
     ingress {
     from_port   = "22"
     to_port     = "22"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    protocol    = "ssh"
+    cidr_blocks = "172.28.208.1/32"  # works
+  }
   }
 
   ingress {
     from_port   = "3306"
     to_port     = "3306"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = "172.28.208.1/32"  # works
   }
 
   ingress {
@@ -79,14 +80,6 @@ resource "aws_security_group" "networking" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-
-  ingress {
-    from_port   = "22"
-    to_port     = "22"
-    protocol    = "ssh"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   
   egress {
     from_port   = 0
@@ -99,7 +92,5 @@ resource "aws_security_group" "networking" {
     from_port   = "3306"
     to_port     = "3306"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = "sg-04135739bd608ee47"
   }
-}
-
