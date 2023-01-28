@@ -75,16 +75,6 @@ subject:"FAILURE: ${currentBuild.fullDisplayName}",
 body: "Pipeline Falhou , verificar os parametros corretos!"
 }
 
-post {
-        // Send the build result to slack channel
-        success {
-          slackSend (color:'good', message: "<@$userIds>Successfully deployed")
-        }
-        failure {
-            slackSend (color:'danger', message: "<@$userIds>Error in build ${env.JOB_NAME}")
-        }
-    }
-       
 }
 }
 
