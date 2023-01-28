@@ -15,13 +15,6 @@ pipeline{
 
 stages {   
 
-stage('Slack Notification(Start)') {
-  steps {
-  slackSend message: 'Pipeline Inciada!. Necessidade de atenção, caso seja em Produção!'
-
- }
- }
-
 stage('GIT CLONE') {
   steps {
    // Get code from a GitHub repository
@@ -38,13 +31,6 @@ stage('SynkSonar(SAST)') {
 		sh 'mvn snyk:test -fn'
 	}
 	}
-  }
-  
-
-stage('Slack Notification(Terraform Start Process)') {
-  steps {
-    slackSend message: 'Agora está iniciando processo de construção da infra-estrutura da AWS. O commando "terraform fmt" , vai atualizar somente oque foi alterado ou adicionado ao projeto!'
-  }
   }
 
   //Terraform
