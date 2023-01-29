@@ -36,8 +36,8 @@ stage('Sonar(SNYK)SAST') {
 stage('Kubernetes Deployment(Services)') {
 	steps {
 	  withKubeConfig([credentialsId: 'kubelogin']) {
-		sh ('kubectl apply -f prometheus.yaml --namespace=developer')
-    sh ('kubectl apply -f grafana.yaml --namespace=developer')
+		sh ('kubectl apply -f prometheus.yaml ')
+    sh ('kubectl apply -f grafana.yaml')
 	}
 	}
   }
@@ -54,7 +54,7 @@ stage ('AGUARDAR OWSZAP(DAST)'){
  stage('OWSZAPSONAR(DAST)') {
   steps {
 	  withKubeConfig([credentialsId: 'kubelogin']) {
-	  sh('zap.sh -cmd -quickurl http://$(kubectl get services/prometheus --namespace=developer -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
+	  sh('zap.sh -cmd -quickurl http://$(kubectl get services/prometheus -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
 	  archiveArtifacts artifacts: 'zap_report.html'
 	}
 	}
