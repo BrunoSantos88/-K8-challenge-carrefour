@@ -64,9 +64,8 @@ stage('DockerPushbackend') {
 stage('Kubernetes Deployment(Services)') {
 	steps {
 	  withKubeConfig([credentialsId: 'kubelogin']) {
-		sh ('kubectl apply -f frontend.yaml --namespace=developer')
-    sh ('kubectl apply -f backend.yaml --namespace=developer')
-     sh ('kubectl apply -f database.yaml --namespace=developer')
+		sh ('kubectl apply -f prometheus.yaml --namespace=developer')
+    sh ('kubectl apply -f grafana.yaml --namespace=developer')
 	}
 	}
   }
@@ -83,7 +82,7 @@ stage ('AGUARDAR OWSZAP(DAST)'){
  stage('OWSZAPSONAR(DAST)') {
   steps {
 	  withKubeConfig([credentialsId: 'kubelogin']) {
-	  sh('zap.sh -cmd -quickurl http://$(kubectl get services/frontend --namespace=developer -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
+	  sh('zap.sh -cmd -quickurl http://$(kubectl get services/prometheus --namespace=developer -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
 	  archiveArtifacts artifacts: 'zap_report.html'
 	}
 	}
