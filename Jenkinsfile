@@ -24,41 +24,28 @@ credentialsId: 'aws-developer'
           }
 }
 
-stage('Sonar(SNYK)SAST') {
-            steps {		
-				withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
-					sh 'mvn snyk:test -fn'
-				}
-			}
+//INFRA iS CODE
+
+
+   stage('TF INICIAR') {
+         steps {
+           sh 'terraform init -reconfigure'
+                
+          }
+     }
+
+    stage('TF FMT') {
+         steps {
+              sh 'terraform fmt'
+                
+          }
+       }
+
+      stage('TF destroy') {
+           steps {
+        sh 'terraform destroy -auto-approve'
+           }
     }
-
-
-stage('Kubernetes Deployment(Services)') {
-	steps {
-	  withKubeConfig([credentialsId: 'kubelogin']) {
-		sh ('kubectl delete -f prometheus.yaml ')
-    sh ('kubectl delete -f grafana.yaml')
-	}
-	}
-  }
-
-
-  //Teste DAST para os serviçoes kuberntes
-stage ('AGUARDAR OWSZAP(DAST)'){
-	steps {
-    sh 'pwd; sleep 180; echo "Application Has been deployed on K8S"'
-	}
-	}
-	   
-
- stage('OWSZAPSONAR(DAST)') {
-  steps {
-	  withKubeConfig([credentialsId: 'kubelogin']) {
-	  sh('zap.sh -cmd -quickurl http://$(kubectl get services/prometheus -o json| jq -r ".status.loadBalancer.ingress[] | .hostname") -quickprogress -quickout ${WORKSPACE}/zap_report.html')
-	  archiveArtifacts artifacts: 'zap_report.html'
-	}
-	}
-  } 
-
-}
+	
+        }
 }
