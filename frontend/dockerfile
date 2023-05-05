@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM nginx:1-bullseye
 WORKDIR /var/www/html
 COPY css.css /usr/share/nginx/html/
 COPY index.html /usr/share/nginx/html/
